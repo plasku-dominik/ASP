@@ -1,0 +1,53 @@
+﻿@page "/todo"
+@rendermode InteractiveServer
+<h3>Todo (@todos.Count(t => !t.IsDone))</h3>
+
+<ul style="list-style-type: none; padding: 0;">
+    @foreach (var todo in todos) {
+        <li>
+            <input type="checkbox" @bind="todo.IsDone">
+            <strong>@todo.ID</strong>
+           <!-- <input @bind="todo.Title"> -->
+            <strong>@todo.Title</strong>
+            <button @onclick="() => DeleteTodo(todo.ID)">Delete</button>
+        </li>
+    }
+</ul>
+
+
+<input @bind="newTodo">
+<button @onclick="AddTodo">Add todo</button>
+
+@code {
+    List<TodoItem> todos = new List<TodoItem>();
+
+    string newTodo = "";
+    public class TodoItem
+    {
+        private static int _nextId = 1;
+        public int ID { get; }
+        public string Title { get; set; }
+        public bool IsDone { get; set; }
+
+        public TodoItem()
+        {
+            ID = _nextId++;
+        }
+    }
+    private void AddTodo(MouseEventArgs e)
+    {
+        if (!string.IsNullOrWhiteSpace(newTodo)) 
+        {
+            todos.Add(new TodoItem {Title = newTodo});
+            newTodo = "";
+        }
+    }
+    private void DeleteTodo(int id)
+    {
+       var todoToRemove = todos.FirstOrDefault(t => t.ID == id);
+       if (todoToRemove != null)
+       {
+        todos.Remove(todoToRemove);
+       }
+    }
+}
