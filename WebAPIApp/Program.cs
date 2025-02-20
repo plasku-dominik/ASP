@@ -19,7 +19,7 @@ app.MapGet("/todos/{id}", Results<Ok<Todo>, NotFound> (int id) =>
 app.MapPost("/todos", (Todo task) => 
 {
     todos.Add(task);
-    return TypedResults.Created("/todos/{id}");
+    return TypedResults.Created("/todos/{id}", task);
 });
 
 app.MapDelete("/todos/{id}", (int id) => 
@@ -30,4 +30,4 @@ app.MapDelete("/todos/{id}", (int id) =>
 
 app.Run();
 
-public record Todo(int Id, string Name, DateTime DueDate, bool IsCompleted) {}
+public record Todo(int Id, string Name, DateTime DueDate, bool IsCompleted);

@@ -1,1 +1,21 @@
-GET http://localhost:5291/
+GET http://localhost:5291/todos
+
+###
+
+POST http://localhost:5291/todos 
+content-type: application/json
+
+{
+    "id": 2,
+    "name": "Write Another Demo",
+    "dueDate": "2023-12-31",
+    "isCompleted": false
+}
+
+###
+
+GET http://localhost:5291/todos/2
+
+###
+
+DELETE http://localhost:5291/todos/2
